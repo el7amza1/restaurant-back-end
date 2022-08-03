@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import { config } from 'dotenv';
 import AddDataSource from './AppDataSource';
+import productRouter from"./routes/products.routes"
 
 
 const app = express();
@@ -13,6 +14,12 @@ app.use(morgan("dev"));
 app.use(helmet());
 app.use(json());
 app.use(urlencoded({ extended: false }));
+
+app.use("/product", productRouter)
+
+app.get('*',(req,res)=>{
+    res.status(404).json({message:'404'})
+})
 
 
 app.listen(process.env.PORT, async() => {
